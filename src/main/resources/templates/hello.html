@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Hello Thymeleaf!</title>
+    <base th:href="${#request.getContextPath()}+'/'">
+    <script type="text/javascript" th:src="@{/js/jquery-1.6.js}"></script>
+</head>
+<body>
+    <p th:text="'Hello, ' + ${name} + '!'" th:fragment="p"/>
+    <input type="text" id="name"/>
+    <button id="btn">reload</button>
+</body>
+<script type="text/javascript">
+$('#btn').click(function () {
+    var url = 'reload?name='+$('#name').val();
+    $('p').load(url);
+});
+</script>
+</html>

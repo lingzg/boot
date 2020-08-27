@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>userList</title>
+    <base th:href="${#request.getContextPath()}+'/'">
+    <link rel="stylesheet" th:href="@{/css/base.css}"></link>
+    <link rel="stylesheet" th:href="@{/fonts/iconfont.css}"></link>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"></link>
+    <script type="text/javascript" th:src="@{/js/jquery-1.6.js}"></script>
+    <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+</head>
+<body class="container">
+<br/>
+<h1>用户列表</h1>
+<br/><br/>
+<div class="form-group">
+    <div class="col-sm-2 control-label">
+        <a href="/toAdd" th:href="@{/toAdd}" class="btn btn-info">add</a>
+    </div>
+</div>
+<div class="with:80%">
+    <table class="table table-hover" th:fragment="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>User Name</th>
+            <th>Password</th>
+            <th>Age</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody th:data="${page.pageTotal}">
+        <tr  th:each="user : ${page.rows}">
+            <th scope="row" th:text="${user.userId}">1</th>
+            <td th:text="${user.userName}">neo</td>
+            <td th:text="${user.password}">Otto</td>
+            <td th:text="${user.nickName}">6</td>
+            <td><a th:href="@{/toEdit(id=${user.userId})}">edit</a></td>
+            <td><a th:href="@{/delete(id=${user.userId})}">delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="page" class="page"></div>
+</div>
+</body>
+<script type="text/javascript">
+layui.use(['element','layer','table','laypage'], function(){
+	var element = layui.element, layer = layui.layer, table = layui.table, laypage = layui.laypage;
+	let pageData={};
+	//pageRender(Number($('tbody').attr('data')));
+	
+	//function pageRender(count){
+	  laypage.render({
+		  elem: 'page',
+		  count: 10, //数据总数，从服务端得到
+		  theme: '#2058c3',
+		  layout: ['prev', 'page', 'next', 'skip'],
+		  prev: '<em><i class="layui-icon layui-icon-left"></i></em>',
+          next: '<em><i class="layui-icon layui-icon-right"></i></em>',
+		  jump: function(obj, first){
+		    //首次不执行
+		    if(!first){
+		    	getPage(obj.curr,false);
+		    }
+		  }
+		});
+  	//}
+	function getPage(pno){
+		var param = $.extend({pno:pno},pageData);
+		$.post('user/list',param,function(res){
+			$('table').html(res);
+			pageRender(Number($('tbody').attr('data')));
+		});     
+	}
+});
+</script>
+</html>
