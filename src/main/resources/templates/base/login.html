@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>login</title>
+    <base th:href="${#request.getContextPath()}+'/'">
+    <script type="text/javascript" th:src="@{/js/jquery-1.6.js}"></script>
+</head>
+<body>
+    <form action="login">
+         用户名：<input type="text" name="username"/><br/>
+    密码：<input type="password" name="password"/><br/>
+    验证码：<input type="text" name="vcode"  />
+    <a href="javascript:;" onclick="changeValidateCode()" class="button btn-disabled">
+        <img src="getGifCode" id="randImg"  />
+    </a><br/>
+    <button type="submit">登录</button>
+    </form>
+    <p th:text="${session.message}"></p>
+    <!-- <p th:text="${#request.getAttribute('message')}"></p> -->
+</body>
+<script type="text/javascript">
+function changeValidateCode() {
+    var timestamp  =  "?data=" + new Date() + Math.floor( Math.random()*24 );
+    $("#randImg").attr('src','getGifCode'+timestamp);
+}
+</script>
+
+</html>

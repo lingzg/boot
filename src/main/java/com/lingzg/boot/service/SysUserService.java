@@ -30,4 +30,8 @@ public class SysUserService{
         page.setTotal(total);
         return page;
     }
+
+	public SysUser findByUsername(String username) {
+		return userDao.getByUsername(username);
+	}
 }

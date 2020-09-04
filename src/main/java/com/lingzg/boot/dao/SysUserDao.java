@@ -15,6 +15,7 @@ public interface SysUserDao {
     int findPageCount(SysUserVO vo);
     
     SysUser getById(@Param("userId")Long userId);
+    SysUser getByUsername(@Param("username")String username);
     
     void save();
     

@@ -27,6 +27,12 @@
       where id=#{userId}
     </select>
     
+    <select id="getByUsername" parameterType="String" resultType="com.lingzg.boot.model.SysUser">
+    select id userId, user_name userName, password, nick_name nickName
+      from t_base_user_info
+      where user_name=#{username}
+    </select>
+    
     <update id="update" parameterType="String">
     update t_base_user_info
       set user_name=#{userName}

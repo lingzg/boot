@@ -3,6 +3,7 @@ package com.lingzg.boot.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,6 +25,7 @@ public class SysUserController {
     @Autowired
     private SysUserService userService;
     
+    @RequiresPermissions("user:view")
     @RequestMapping("/page")
     public String page(HttpServletRequest request, HttpServletResponse response, ModelMap model, SysUserVO vo){
         PageInfo page = userService.findPage(vo);
@@ -31,6 +33,7 @@ public class SysUserController {
         return "system/user";
     }
     
+    @RequiresPermissions("user:view")
     @RequestMapping("/list")
     public String list(HttpServletRequest request, HttpServletResponse response, ModelMap model, SysUserVO vo){
         PageInfo page = userService.findPage(vo);
