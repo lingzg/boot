@@ -17,4 +17,8 @@ $('#btn').click(function () {
     $('p').load(url);
 });
 </script>
+<script th:inline="javascript">
+    var message = [[${name}]];
+    console.log(message);
+</script>
 </html>
